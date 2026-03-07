@@ -3,7 +3,6 @@ package org.example.backendapi.model.dao;
 import org.example.backendapi.model.entities.Usuario;
 import org.springframework.data.repository.CrudRepository;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
