@@ -2,6 +2,7 @@ package org.example.backendapi.control;
 
 import org.example.backendapi.model.dao.IUsuarioDAO;
 import org.example.backendapi.model.entities.Usuario;
+import org.example.backendapi.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class UsuarioControl {
     @Autowired
     IUsuarioDAO usuarioDAO;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping
     public List<Usuario> buscarUsuarios() {
@@ -53,8 +56,9 @@ public class UsuarioControl {
 
     @Validated
     @PostMapping("/alta")
-    public Usuario guardarUsuario(@Validated @RequestBody Usuario usuario){
-        return usuarioDAO.save(usuario);
+    public ResponseEntity<Usuario> guardarUsuario(@Validated @RequestBody Usuario usuario){
+        Usuario guardado = usuarioService.registrarUsuario(usuario);
+        return ResponseEntity.ok(guardado);
     }
 
     @PutMapping("/{id}")
