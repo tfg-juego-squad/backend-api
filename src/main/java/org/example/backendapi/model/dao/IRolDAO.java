@@ -4,7 +4,8 @@ import org.example.backendapi.model.entities.Rol;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IRolDAO extends CrudRepository<Rol, Integer> {
-    List<Rol> findByNombre(String nombre);
+    Optional<Rol> findByNombre(String nombre);
 }

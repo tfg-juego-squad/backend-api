@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAulaDAO extends CrudRepository<Aula, Integer> {
+    Optional<Aula> findAulaById(String id);
     List<Aula> findAulasByProfesorId(String profesorId);
     Optional<Aula> findAulaByCodigoInvitacion(String codigoInvitacion);
 }
