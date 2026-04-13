@@ -1,10 +1,13 @@
 package org.example.backendapi.model.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -13,58 +16,25 @@ public class Usuario {
     @Column(name = "id", nullable = false, length = 36)
     private String id;
 
-    @Column(name = "nombre_usuario", nullable = false, length = 50)
+    @Column(name = "nombre_usuario", nullable = false, length = 50, unique = true)
     private String nombreUsuario;
 
     @Column(name = "hash_contrasena", nullable = false)
     private String hashContrasena;
 
-    @ColumnDefault("'ALUMNO'")
-    @Column(name = "rol", length = 20)
-    private String rol;
-
     @ColumnDefault("current_timestamp()")
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;
 
-    public String getId() {
-        return id;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aula_id")
+    private Aula aula;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getHashContrasena() {
-        return hashContrasena;
-    }
-
-    public void setHashContrasena(String hashContrasena) {
-        this.hashContrasena = hashContrasena;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public Instant getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Instant fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuarios_roles",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id")
+    )
+    private Set<Rol> roles;
 }
