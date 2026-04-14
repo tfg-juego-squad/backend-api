@@ -9,5 +9,4 @@ import java.util.Optional;
 public interface IUsuarioDAO extends CrudRepository<Usuario, String> {
     Optional<Usuario> findUsuarioById(String id);
     List<Usuario> findUsuarioByNombreUsuario(String nombreUsuario);
-    List<Usuario> findUsuarioByRol(String rol);
 }
