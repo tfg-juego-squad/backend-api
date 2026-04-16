@@ -1,12 +1,14 @@
 package org.example.backendapi.model.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
 
+@Data
 @Entity
 @Table(name = "puntuaciones")
 public class Puntuaciones {
@@ -25,37 +27,4 @@ public class Puntuaciones {
     @ColumnDefault("current_timestamp()")
     @Column(name = "fecha_completado")
     private Instant fechaCompletado;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Prueba getPrueba() {
-        return prueba;
-    }
-
-    public void setPrueba(Prueba prueba) {
-        this.prueba = prueba;
-    }
-
-    public Integer getPuntosObtenidos() {
-        return puntosObtenidos;
-    }
-
-    public void setPuntosObtenidos(Integer puntosObtenidos) {
-        this.puntosObtenidos = puntosObtenidos;
-    }
-
-    public Instant getFechaCompletado() {
-        return fechaCompletado;
-    }
-
-    public void setFechaCompletado(Instant fechaCompletado) {
-        this.fechaCompletado = fechaCompletado;
-    }
-
 }

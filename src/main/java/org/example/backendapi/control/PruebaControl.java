@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tfg/prueba")
+@RequestMapping("/tfg/pruebas")
 public class PruebaControl {
     @Autowired
     IPruebaDAO pruebaDAO;
