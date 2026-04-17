@@ -64,14 +64,26 @@ public class UsuarioControl {
         }
     }
 
-    // 3. El Profesor genera los alumnos para su Aula
     @PostMapping("/aulas/{aulaId}/generar-alumnos")
     public ResponseEntity<?> generarAlumnos(@PathVariable String aulaId, @RequestParam int cantidad) {
         try {
             List<Map<String, String>> credenciales = usuarioService.generarAlumnosParaAula(aulaId, cantidad);
-            return ResponseEntity.ok(credenciales); // Devuelve el JSON con los usuarios y contraseñas planas
+            return ResponseEntity.ok(credenciales);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
+        try {
+            String username = credenciales.get("usuario");
+            String password = credenciales.get("password");
+
+            Usuario usuarioAutenticado = usuarioService.hacerLogin(username, password);
+            return ResponseEntity.ok(usuarioAutenticado);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(e.getMessage());
         }
     }
 

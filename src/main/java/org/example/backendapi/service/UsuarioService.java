@@ -105,4 +105,20 @@ public class UsuarioService {
         }
         return pass.toString();
     }
+
+    public Usuario hacerLogin(String nombreUsuario, String passwordPlana) {
+        List<Usuario> usuarios = usuarioDAO.findUsuarioByNombreUsuario(nombreUsuario);
+
+        if (usuarios.isEmpty()) {
+            throw new RuntimeException("Error: Usuario no encontrado");
+        }
+
+        Usuario usuario = usuarios.get(0);
+
+        if (BCrypt.checkpw(passwordPlana, usuario.getHashContrasena())) {
+            return usuario;
+        } else {
+            throw new RuntimeException("Error: Contraseña incorrecta");
+        }
+    }
 }
