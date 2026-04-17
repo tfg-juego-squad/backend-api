@@ -17,6 +17,7 @@ import java.util.Optional;
 public class UsuarioControl {
     @Autowired
     IUsuarioDAO usuarioDAO;
+
     @Autowired
     private UsuarioService usuarioService;
 
@@ -45,25 +46,6 @@ public class UsuarioControl {
         try {
             Usuario guardado = usuarioService.registrarProfesor(profesor);
             return ResponseEntity.ok(guardado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/aulas/crear")
-    public ResponseEntity<?> crearAula(@RequestParam String nombreAula, @RequestParam String profesorId) {
-        try {
-            return ResponseEntity.ok(usuarioService.crearAula(nombreAula, profesorId));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/aulas/{aulaId}/generar-alumnos")
-    public ResponseEntity<?> generarAlumnos(@PathVariable String aulaId, @RequestParam int cantidad) {
-        try {
-            List<Map<String, String>> credenciales = usuarioService.generarAlumnosParaAula(aulaId, cantidad);
-            return ResponseEntity.ok(credenciales);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

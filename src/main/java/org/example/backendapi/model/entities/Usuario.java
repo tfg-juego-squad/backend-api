@@ -1,5 +1,6 @@
 package org.example.backendapi.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -24,6 +25,7 @@ public class Usuario {
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aula_id")
     private Aula aula;
