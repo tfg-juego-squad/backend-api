@@ -20,11 +20,6 @@ public class UsuarioControl {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping
-    public List<Usuario> buscarUsuarios() {
-        return (List<Usuario>) usuarioDAO.findAll();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable String id){
         Optional<Usuario> usuario = usuarioDAO.findUsuarioById(id);
