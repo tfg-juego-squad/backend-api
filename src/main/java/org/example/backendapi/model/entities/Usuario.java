@@ -5,8 +5,6 @@ import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
-import java.util.Set;
-
 @Data
 @Entity
 @Table(name = "usuarios")
@@ -30,11 +28,7 @@ public class Usuario {
     @JoinColumn(name = "aula_id")
     private Aula aula;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "usuarios_roles",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id")
-    )
-    private Set<Rol> roles;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol", nullable = false)
+    private TipoRol rol;
 }
