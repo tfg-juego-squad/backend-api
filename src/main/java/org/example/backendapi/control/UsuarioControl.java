@@ -17,13 +17,9 @@ import java.util.Optional;
 public class UsuarioControl {
     @Autowired
     IUsuarioDAO usuarioDAO;
+
     @Autowired
     private UsuarioService usuarioService;
-
-    @GetMapping
-    public List<Usuario> buscarUsuarios() {
-        return (List<Usuario>) usuarioDAO.findAll();
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable String id){
@@ -55,23 +51,16 @@ public class UsuarioControl {
         }
     }
 
-    @PostMapping("/aulas/crear")
-    public ResponseEntity<?> crearAula(@RequestParam String nombreAula, @RequestParam String profesorId) {
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
         try {
-            return ResponseEntity.ok(usuarioService.crearAula(nombreAula, profesorId));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+            String username = credenciales.get("usuario");
+            String password = credenciales.get("password");
 
-    // 3. El Profesor genera los alumnos para su Aula
-    @PostMapping("/aulas/{aulaId}/generar-alumnos")
-    public ResponseEntity<?> generarAlumnos(@PathVariable String aulaId, @RequestParam int cantidad) {
-        try {
-            List<Map<String, String>> credenciales = usuarioService.generarAlumnosParaAula(aulaId, cantidad);
-            return ResponseEntity.ok(credenciales); // Devuelve el JSON con los usuarios y contraseñas planas
+            Usuario usuarioAutenticado = usuarioService.hacerLogin(username, password);
+            return ResponseEntity.ok(usuarioAutenticado);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(401).body(e.getMessage());
         }
     }
 
