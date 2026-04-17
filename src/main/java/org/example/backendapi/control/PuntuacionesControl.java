@@ -17,13 +17,8 @@ public class PuntuacionesControl {
     @Autowired
     IPuntuacionesDAO puntuacionesDAO;
 
-    @GetMapping
-    public List<Puntuaciones> buscarPuntuaciones() {
-        return (List<Puntuaciones>) puntuacionesDAO.findAll();
-    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<Puntuaciones> buscarPuntuacionPorId(@PathVariable(value = "id") String id){
+    public ResponseEntity<Puntuaciones> buscarPuntuacionPorId(@PathVariable String id){
         Optional<Puntuaciones> puntuacion = puntuacionesDAO.findPuntuacionesById(id);
         if(puntuacion.isPresent()){
             return ResponseEntity.ok().body(puntuacion.get());
@@ -33,7 +28,7 @@ public class PuntuacionesControl {
     }
 
     @GetMapping("/prueba/{prueba}")
-    public ResponseEntity<List<Puntuaciones>> buscarPuntuacionesPorPueba(@PathVariable(value = "prueba") Prueba prueba){
+    public ResponseEntity<List<Puntuaciones>> buscarPuntuacionesPorPueba(@PathVariable Prueba prueba){
         List<Puntuaciones> listaPuntuaciones = puntuacionesDAO.findPuntuacionesByPrueba(prueba);
         if(!listaPuntuaciones.isEmpty()){
             return ResponseEntity.ok().body(listaPuntuaciones);
@@ -53,7 +48,7 @@ public class PuntuacionesControl {
     }
 
     @GetMapping("/puntos/{puntos}")
-    public ResponseEntity<List<Puntuaciones>> buscarPuntuacionesPorPuntos(@PathVariable(value = "puntos") int puntos){
+    public ResponseEntity<List<Puntuaciones>> buscarPuntuacionesPorPuntos(@PathVariable int puntos){
         List<Puntuaciones> listaPuntuaciones = puntuacionesDAO.findPuntuacionesByPuntosObtenidos(puntos);
         if(!listaPuntuaciones.isEmpty()){
             return ResponseEntity.ok().body(listaPuntuaciones);
@@ -70,7 +65,7 @@ public class PuntuacionesControl {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarPuntuaciones(@RequestBody Puntuaciones nuevasPuntuaciones,
-                                                    @PathVariable(value = "id") String id) {
+                                                    @PathVariable String id) {
         Optional<Puntuaciones> puntuaciones = puntuacionesDAO.findById(id);
         if (puntuaciones.isPresent()) {
             puntuaciones.get().setPuntosObtenidos(nuevasPuntuaciones.getPuntosObtenidos());
@@ -84,7 +79,7 @@ public class PuntuacionesControl {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> borrarPuntuaciones(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> borrarPuntuaciones(@PathVariable String id) {
         Optional<Puntuaciones> puntuaciones = puntuacionesDAO.findPuntuacionesById(id);
         if(puntuaciones.isPresent()) {
             puntuacionesDAO.deleteById(id);

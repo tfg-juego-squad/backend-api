@@ -16,11 +16,6 @@ public class PruebaControl {
     @Autowired
     IPruebaDAO pruebaDAO;
 
-    @GetMapping
-    public List<Prueba> buscarPruebas() {
-        return (List<Prueba>) pruebaDAO.findAll();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Prueba> buscarPruebaPorId(@PathVariable(value = "id") String id){
         Optional<Prueba> prueba = pruebaDAO.findPruebaById(id);
